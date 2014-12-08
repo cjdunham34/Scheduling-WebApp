@@ -1,0 +1,454 @@
+{{response.files.append(URL(r=request,c='static',f='css/schedule.css'))}}
+{{extend 'layout.html'}}
+
+<table>
+    <tr>
+        <td><b>Monday</b></td>
+        <td><b>Tuesday</b></td>
+        <td><b>Wednesday</b></td>
+        <td><b>Thursday</b></td>
+        <td><b>Friday</b></td>
+        <td><b>Saturday</b></td>
+        <td><b>Sunday</b></td>
+    </tr>
+	<!--
+    <tr>
+        <td class='timecell'>12:00AM</td>
+        <td class='timecell'>12:00AM</td>
+        <td class='timecell'>12:00AM</td>
+        <td class='timecell'>12:00AM</td>
+        <td class='timecell'>12:00AM</td>
+        <td class='timecell'>12:00AM</td>
+        <td class='timecell'>12:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>12:30AM</td>
+        <td class='timecell'>12:30AM</td>
+        <td class='timecell'>12:30AM</td>
+        <td class='timecell'>12:30AM</td>
+        <td class='timecell'>12:30AM</td>
+        <td class='timecell'>12:30AM</td>
+        <td class='timecell'>12:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>1:00AM</td>
+        <td class='timecell'>1:00AM</td>
+        <td class='timecell'>1:00AM</td>
+        <td class='timecell'>1:00AM</td>
+        <td class='timecell'>1:00AM</td>
+        <td class='timecell'>1:00AM</td>
+        <td class='timecell'>1:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>1:30AM</td>
+        <td class='timecell'>1:30AM</td>
+        <td class='timecell'>1:30AM</td>
+        <td class='timecell'>1:30AM</td>
+        <td class='timecell'>1:30AM</td>
+        <td class='timecell'>1:30AM</td>
+        <td class='timecell'>1:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>2:00AM</td>
+        <td class='timecell'>2:00AM</td>
+        <td class='timecell'>2:00AM</td>
+        <td class='timecell'>2:00AM</td>
+        <td class='timecell'>2:00AM</td>
+        <td class='timecell'>2:00AM</td>
+        <td class='timecell'>2:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>2:30AM</td>
+        <td class='timecell'>2:30AM</td>
+        <td class='timecell'>2:30AM</td>
+        <td class='timecell'>2:30AM</td>
+        <td class='timecell'>2:30AM</td>
+        <td class='timecell'>2:30AM</td>
+        <td class='timecell'>2:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>3:00AM</td>
+        <td class='timecell'>3:00AM</td>
+        <td class='timecell'>3:00AM</td>
+        <td class='timecell'>3:00AM</td>
+        <td class='timecell'>3:00AM</td>
+        <td class='timecell'>3:00AM</td>
+        <td class='timecell'>3:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>3:30AM</td>
+        <td class='timecell'>3:30AM</td>
+        <td class='timecell'>3:30AM</td>
+        <td class='timecell'>3:30AM</td>
+        <td class='timecell'>3:30AM</td>
+        <td class='timecell'>3:30AM</td>
+        <td class='timecell'>3:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>4:00AM</td>
+        <td class='timecell'>4:00AM</td>
+        <td class='timecell'>4:00AM</td>
+        <td class='timecell'>4:00AM</td>
+        <td class='timecell'>4:00AM</td>
+        <td class='timecell'>4:00AM</td>
+        <td class='timecell'>4:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>4:30AM</td>
+        <td class='timecell'>4:30AM</td>
+        <td class='timecell'>4:30AM</td>
+        <td class='timecell'>4:30AM</td>
+        <td class='timecell'>4:30AM</td>
+        <td class='timecell'>4:30AM</td>
+        <td class='timecell'>4:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>5:00AM</td>
+        <td class='timecell'>5:00AM</td>
+        <td class='timecell'>5:00AM</td>
+        <td class='timecell'>5:00AM</td>
+        <td class='timecell'>5:00AM</td>
+        <td class='timecell'>5:00AM</td>
+        <td class='timecell'>5:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>5:30AM</td>
+        <td class='timecell'>5:30AM</td>
+        <td class='timecell'>5:30AM</td>
+        <td class='timecell'>5:30AM</td>
+        <td class='timecell'>5:30AM</td>
+        <td class='timecell'>5:30AM</td>
+        <td class='timecell'>5:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>6:00AM</td>
+        <td class='timecell'>6:00AM</td>
+        <td class='timecell'>6:00AM</td>
+        <td class='timecell'>6:00AM</td>
+        <td class='timecell'>6:00AM</td>
+        <td class='timecell'>6:00AM</td>
+        <td class='timecell'>6:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>6:30AM</td>
+        <td class='timecell'>6:30AM</td>
+        <td class='timecell'>6:30AM</td>
+        <td class='timecell'>6:30AM</td>
+        <td class='timecell'>6:30AM</td>
+        <td class='timecell'>6:30AM</td>
+        <td class='timecell'>6:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>7:00AM</td>
+        <td class='timecell'>7:00AM</td>
+        <td class='timecell'>7:00AM</td>
+        <td class='timecell'>7:00AM</td>
+        <td class='timecell'>7:00AM</td>
+        <td class='timecell'>7:00AM</td>
+        <td class='timecell'>7:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>7:30AM</td>
+        <td class='timecell'>7:30AM</td>
+        <td class='timecell'>7:30AM</td>
+        <td class='timecell'>7:30AM</td>
+        <td class='timecell'>7:30AM</td>
+        <td class='timecell'>7:30AM</td>
+        <td class='timecell'>7:30AM</td>
+    </tr>
+	-->
+    <tr>
+        <td class='timecell'>8:00AM</td>
+        <td class='timecell'>8:00AM</td>
+        <td class='timecell'>8:00AM</td>
+        <td class='timecell'>8:00AM</td>
+        <td class='timecell'>8:00AM</td>
+        <td class='timecell'>8:00AM</td>
+        <td class='timecell'>8:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>8:30AM</td>
+        <td class='timecell'>8:30AM</td>
+        <td class='timecell'>8:30AM</td>
+        <td class='timecell'>8:30AM</td>
+        <td class='timecell'>8:30AM</td>
+        <td class='timecell'>8:30AM</td>
+        <td class='timecell'>8:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>9:00AM</td>
+        <td class='timecell'>9:00AM</td>
+        <td class='timecell'>9:00AM</td>
+        <td class='timecell'>9:00AM</td>
+        <td class='timecell'>9:00AM</td>
+        <td class='timecell'>9:00AM</td>
+        <td class='timecell'>9:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>9:30AM</td>
+        <td class='timecell'>9:30AM</td>
+        <td class='timecell'>9:30AM</td>
+        <td class='timecell'>9:30AM</td>
+        <td class='timecell'>9:30AM</td>
+        <td class='timecell'>9:30AM</td>
+        <td class='timecell'>9:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>10:00AM</td>
+        <td class='timecell'>10:00AM</td>
+        <td class='timecell'>10:00AM</td>
+        <td class='timecell'>10:00AM</td>
+        <td class='timecell'>10:00AM</td>
+        <td class='timecell'>10:00AM</td>
+        <td class='timecell'>10:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>10:30AM</td>
+        <td class='timecell'>10:30AM</td>
+        <td class='timecell'>10:30AM</td>
+        <td class='timecell'>10:30AM</td>
+        <td class='timecell'>10:30AM</td>
+        <td class='timecell'>10:30AM</td>
+        <td class='timecell'>10:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>11:00AM</td>
+        <td class='timecell'>11:00AM</td>
+        <td class='timecell'>11:00AM</td>
+        <td class='timecell'>11:00AM</td>
+        <td class='timecell'>11:00AM</td>
+        <td class='timecell'>11:00AM</td>
+        <td class='timecell'>11:00AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>11:30AM</td>
+        <td class='timecell'>11:30AM</td>
+        <td class='timecell'>11:30AM</td>
+        <td class='timecell'>11:30AM</td>
+        <td class='timecell'>11:30AM</td>
+        <td class='timecell'>11:30AM</td>
+        <td class='timecell'>11:30AM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>12:00PM</td>
+        <td class='timecell'>12:00PM</td>
+        <td class='timecell'>12:00PM</td>
+        <td class='timecell'>12:00PM</td>
+        <td class='timecell'>12:00PM</td>
+        <td class='timecell'>12:00PM</td>
+        <td class='timecell'>12:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>12:30PM</td>
+        <td class='timecell'>12:30PM</td>
+        <td class='timecell'>12:30PM</td>
+        <td class='timecell'>12:30PM</td>
+        <td class='timecell'>12:30PM</td>
+        <td class='timecell'>12:30PM</td>
+        <td class='timecell'>12:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>1:00PM</td>
+        <td class='timecell'>1:00PM</td>
+        <td class='timecell'>1:00PM</td>
+        <td class='timecell'>1:00PM</td>
+        <td class='timecell'>1:00PM</td>
+        <td class='timecell'>1:00PM</td>
+        <td class='timecell'>1:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>1:30PM</td>
+        <td class='timecell'>1:30PM</td>
+        <td class='timecell'>1:30PM</td>
+        <td class='timecell'>1:30PM</td>
+        <td class='timecell'>1:30PM</td>
+        <td class='timecell'>1:30PM</td>
+        <td class='timecell'>1:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>2:00PM</td>
+        <td class='timecell'>2:00PM</td>
+        <td class='timecell'>2:00PM</td>
+        <td class='timecell'>2:00PM</td>
+        <td class='timecell'>2:00PM</td>
+        <td class='timecell'>2:00PM</td>
+        <td class='timecell'>2:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>2:30PM</td>
+        <td class='timecell'>2:30PM</td>
+        <td class='timecell'>2:30PM</td>
+        <td class='timecell'>2:30PM</td>
+        <td class='timecell'>2:30PM</td>
+        <td class='timecell'>2:30PM</td>
+        <td class='timecell'>2:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>3:00PM</td>
+        <td class='timecell'>3:00PM</td>
+        <td class='timecell'>3:00PM</td>
+        <td class='timecell'>3:00PM</td>
+        <td class='timecell'>3:00PM</td>
+        <td class='timecell'>3:00PM</td>
+        <td class='timecell'>3:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>3:30PM</td>
+        <td class='timecell'>3:30PM</td>
+        <td class='timecell'>3:30PM</td>
+        <td class='timecell'>3:30PM</td>
+        <td class='timecell'>3:30PM</td>
+        <td class='timecell'>3:30PM</td>
+        <td class='timecell'>3:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>4:00PM</td>
+        <td class='timecell'>4:00PM</td>
+        <td class='timecell'>4:00PM</td>
+        <td class='timecell'>4:00PM</td>
+        <td class='timecell'>4:00PM</td>
+        <td class='timecell'>4:00PM</td>
+        <td class='timecell'>4:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>4:30PM</td>
+        <td class='timecell'>4:30PM</td>
+        <td class='timecell'>4:30PM</td>
+        <td class='timecell'>4:30PM</td>
+        <td class='timecell'>4:30PM</td>
+        <td class='timecell'>4:30PM</td>
+        <td class='timecell'>4:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>5:00PM</td>
+        <td class='timecell'>5:00PM</td>
+        <td class='timecell'>5:00PM</td>
+        <td class='timecell'>5:00PM</td>
+        <td class='timecell'>5:00PM</td>
+        <td class='timecell'>5:00PM</td>
+        <td class='timecell'>5:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>5:30PM</td>
+        <td class='timecell'>5:30PM</td>
+        <td class='timecell'>5:30PM</td>
+        <td class='timecell'>5:30PM</td>
+        <td class='timecell'>5:30PM</td>
+        <td class='timecell'>5:30PM</td>
+        <td class='timecell'>5:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>6:00PM</td>
+        <td class='timecell'>6:00PM</td>
+        <td class='timecell'>6:00PM</td>
+        <td class='timecell'>6:00PM</td>
+        <td class='timecell'>6:00PM</td>
+        <td class='timecell'>6:00PM</td>
+        <td class='timecell'>6:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>6:30PM</td>
+        <td class='timecell'>6:30PM</td>
+        <td class='timecell'>6:30PM</td>
+        <td class='timecell'>6:30PM</td>
+        <td class='timecell'>6:30PM</td>
+        <td class='timecell'>6:30PM</td>
+        <td class='timecell'>6:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>7:00PM</td>
+        <td class='timecell'>7:00PM</td>
+        <td class='timecell'>7:00PM</td>
+        <td class='timecell'>7:00PM</td>
+        <td class='timecell'>7:00PM</td>
+        <td class='timecell'>7:00PM</td>
+        <td class='timecell'>7:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>7:30PM</td>
+        <td class='timecell'>7:30PM</td>
+        <td class='timecell'>7:30PM</td>
+        <td class='timecell'>7:30PM</td>
+        <td class='timecell'>7:30PM</td>
+        <td class='timecell'>7:30PM</td>
+        <td class='timecell'>7:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>8:00PM</td>
+        <td class='timecell'>8:00PM</td>
+        <td class='timecell'>8:00PM</td>
+        <td class='timecell'>8:00PM</td>
+        <td class='timecell'>8:00PM</td>
+        <td class='timecell'>8:00PM</td>
+        <td class='timecell'>8:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>8:30PM</td>
+        <td class='timecell'>8:30PM</td>
+        <td class='timecell'>8:30PM</td>
+        <td class='timecell'>8:30PM</td>
+        <td class='timecell'>8:30PM</td>
+        <td class='timecell'>8:30PM</td>
+        <td class='timecell'>8:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>9:00PM</td>
+        <td class='timecell'>9:00PM</td>
+        <td class='timecell'>9:00PM</td>
+        <td class='timecell'>9:00PM</td>
+        <td class='timecell'>9:00PM</td>
+        <td class='timecell'>9:00PM</td>
+        <td class='timecell'>9:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>9:30PM</td>
+        <td class='timecell'>9:30PM</td>
+        <td class='timecell'>9:30PM</td>
+        <td class='timecell'>9:30PM</td>
+        <td class='timecell'>9:30PM</td>
+        <td class='timecell'>9:30PM</td>
+        <td class='timecell'>9:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>10:00PM</td>
+        <td class='timecell'>10:00PM</td>
+        <td class='timecell'>10:00PM</td>
+        <td class='timecell'>10:00PM</td>
+        <td class='timecell'>10:00PM</td>
+        <td class='timecell'>10:00PM</td>
+        <td class='timecell'>10:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>10:30PM</td>
+        <td class='timecell'>10:30PM</td>
+        <td class='timecell'>10:30PM</td>
+        <td class='timecell'>10:30PM</td>
+        <td class='timecell'>10:30PM</td>
+        <td class='timecell'>10:30PM</td>
+        <td class='timecell'>10:30PM</td>
+    </tr>    
+	<tr>
+        <td class='timecell'>11:00PM</td>
+        <td class='timecell'>11:00PM</td>
+        <td class='timecell'>11:00PM</td>
+        <td class='timecell'>11:00PM</td>
+        <td class='timecell'>11:00PM</td>
+        <td class='timecell'>11:00PM</td>
+        <td class='timecell'>11:00PM</td>
+    </tr>
+    <tr>
+        <td class='timecell'>11:30PM</td>
+        <td class='timecell'>11:30PM</td>
+        <td class='timecell'>11:30PM</td>
+        <td class='timecell'>11:30PM</td>
+        <td class='timecell'>11:30PM</td>
+        <td class='timecell'>11:30PM</td>
+        <td class='timecell'>11:30PM</td>
+    </tr>
+</table>
+
+<script>
+    function select(cell) {
+        console.log('click');
+    }
+</script>

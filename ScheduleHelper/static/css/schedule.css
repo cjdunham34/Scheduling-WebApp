@@ -1,0 +1,40 @@
+.timecell {
+}
+
+#test {
+    color: blue;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table {
+    width: 100%%;
+	table-layout: fixed;
+}
+
+td {
+    width: 10%;
+    text-align: center;
+    height: 25%;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+th {
+    width: 150%;
+    text-align: center;
+	cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

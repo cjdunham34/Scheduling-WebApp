@@ -1,0 +1,26 @@
+.timecell {
+}
+
+#test {
+    color: blue;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table {
+    width: 70%;
+}
+
+td {
+    width: 10%;
+    text-align: center;
+    height: 25%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
