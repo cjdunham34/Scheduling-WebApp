@@ -499,11 +499,6 @@
             for (i = 0; i < schedule.length; i++) {
 				schedule[i] = schedule[i].sort(function(a, b){return a-b});
 			}
-			///////////////////////////////////////////TODO/////////////////////////////////////////////////
-			//	schedule array is now sorted. schedule[0] contains a sorted list of all 30 minute blocks of 
-			//	availability for monday, schedule[1] is for tuesday, etc.
-			//  we need to store this in the database via ajax
-			////////////////////////////////////////////////////////////////////////////////////////////////
             $.ajax({
                  type: "POST",
                 data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
