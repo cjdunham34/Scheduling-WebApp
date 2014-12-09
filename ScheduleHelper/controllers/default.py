@@ -177,7 +177,7 @@ def friendship():
             Link.insert(source=me, target=a1)
     elif a0=='deny':
         # deny an existing friendship request
-        db(Link.target==me)(Link.source==a1).delete()
+        db(Link.target==a1)(Link.source==me).delete()
     elif a0=='remove':
         # delete a previous friendship request
         db(Link.source==me)(Link.target==a1).delete()
