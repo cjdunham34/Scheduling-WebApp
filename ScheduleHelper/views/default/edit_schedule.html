@@ -1,7 +1,7 @@
 {{response.files.append(URL(r=request,c='static',f='css/schedule.css'))}}
 {{extend 'layout.html'}}
 
-<table>
+<table onmousedown='return false'>
 	<h2>Click and drag on blocks of availability</h2>
     <tr>
         <th><b>Monday</b></th>
@@ -504,6 +504,14 @@
 			//	availability for monday, schedule[1] is for tuesday, etc.
 			//  we need to store this in the database via ajax
 			////////////////////////////////////////////////////////////////////////////////////////////////
+            $.ajax({
+                 type: "POST",
+                data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
+                 url: '{{=post_url}}',
+                 success: function(msg){
+                     console.log(msg);
+                 }
+            });
         });
     });
 </script>

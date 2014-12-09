@@ -2,14 +2,15 @@
 {{extend 'layout.html'}}
 
 <table>
+	<h2>Click and drag on blocks of availability</h2>
     <tr>
-        <td><b>Monday</b></td>
-        <td><b>Tuesday</b></td>
-        <td><b>Wednesday</b></td>
-        <td><b>Thursday</b></td>
-        <td><b>Friday</b></td>
-        <td><b>Saturday</b></td>
-        <td><b>Sunday</b></td>
+        <th><b>Monday</b></th>
+        <th><b>Tuesday</b></th>
+        <th><b>Wednesday</b></th>
+        <th><b>Thursday</b></th>
+        <th><b>Friday</b></th>
+        <th><b>Saturday</b></th>
+        <th><b>Sunday</b></th>
     </tr>
 	<!--
     <tr>
@@ -447,8 +448,70 @@
     </tr>
 </table>
 
+<button id='submit'>Save Schedule</button>
+
 <script>
-    function select(cell) {
-        console.log('click');
-    }
+	var schedule = [[], [], [], [], [], [], []];
+	var change_to = 'unknown';
+	isMouseDown = false;
+	
+	$('body').mousedown(function() {
+        isMouseDown = true;
+    })
+    .mouseup(function() {
+        isMouseDown = false;
+		change_to = 'unknown';
+    });
+	$('table tr td').mouseenter(function() {
+        if(isMouseDown) {
+			selectCell(this);
+		}
+    });
+	$('table tr td').mousedown(function() {
+		selectCell(this);
+	});
+	
+	function selectCell(cell) {
+		if (change_to == 'unknown') {
+			if (cell.style.backgroundColor == '' || cell.style.backgroundColor == 'white') {
+				change_to = 'teal';
+			}
+			else {
+				change_to = 'white';
+			}
+		}
+		$(cell).css({backgroundColor:change_to});
+		var time = cell.innerHTML;
+		ampm = time.substr(time.length - 2, 2);
+		time = time.replace(':', '');
+		time = parseInt(time.substr(0, time.length - 2));
+		if (ampm == "PM" && time < 1200)
+			time += 1200;
+		if (change_to == 'teal' && schedule[cell.cellIndex].indexOf(time) == -1)
+			schedule[cell.cellIndex].push(time);
+		else if (change_to == 'white' && schedule[cell.cellIndex].indexOf(time) != -1){
+			schedule[cell.cellIndex].splice(schedule[cell.cellIndex].indexOf(time), 1);
+		}
+	}
+	
+    $(document).ready(function() {
+        $("#submit").click(function() {
+            for (i = 0; i < schedule.length; i++) {
+				schedule[i] = schedule[i].sort(function(a, b){return a-b});
+			}
+			///////////////////////////////////////////TODO/////////////////////////////////////////////////
+			//	schedule array is now sorted. schedule[0] contains a sorted list of all 30 minute blocks of 
+			//	availability for monday, schedule[1] is for tuesday, etc.
+			//  we need to store this in the database via ajax
+			////////////////////////////////////////////////////////////////////////////////////////////////
+            $.ajax({
+                 type: "POST",
+                data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
+                 url: '{{=post_url}}',
+                 success: function(msg){
+                     console.log(msg);
+                 }
+            });
+        });
+    });
 </script>

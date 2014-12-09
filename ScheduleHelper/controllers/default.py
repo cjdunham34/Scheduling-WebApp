@@ -39,7 +39,19 @@ def user():
     return dict(form=auth())
 
 def edit_schedule():
-    return dict(message=T('testing'))
+    return dict(post_url=URL('store_schedule'))
+
+# called via ajax
+def store_schedule():
+    monday = request.vars['monday[]']
+    tuesday = request.vars['tuesday[]']
+    wednesday = request.vars['wednesday[]']
+    thursday = request.vars['thursday[]']
+    friday = request.vars['friday[]']
+    saturday = request.vars['saturday[]']
+    sunday = request.vars['sunday[]']
+    db.schedule.update_or_insert(db.schedule.user == auth.user, user=auth.user, monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
+    return response.json(dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday))
 
 @cache.action()
 def download():
