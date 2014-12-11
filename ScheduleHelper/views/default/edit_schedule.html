@@ -468,7 +468,8 @@
                 data: {num: i},
                 success : function(result) {
                     var r = result.substring(1, result.length-1);
-                    schedule[i] = r.split(',');
+                    if (r.length > 2)
+                        schedule[i] = r.split(',');
                 }
             });
             var time_list = schedule[i];
@@ -491,6 +492,12 @@
                 var tr = document.getElementById(str);
                 var td = tr.cells[i];
                 $(td).css({backgroundColor:'teal'});
+            }
+        }
+
+        for (i = 0; i < schedule.length; i++) {
+            for (j = 0; j < schedule[i].length; j++) {
+                schedule[i][j] = parseInt(schedule[i][j]);
             }
         }
     }
