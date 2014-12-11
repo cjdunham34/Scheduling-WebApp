@@ -1,6 +1,8 @@
 {{response.files.append(URL(r=request,c='static',f='css/schedule.css'))}}
 {{extend 'layout.html'}}
 
+
+<body onload='fillSchedule()'>
 <table onmousedown='return false;'>
 	<h2>Click and drag on blocks of availability</h2>
     <tr>
@@ -158,7 +160,7 @@
         <td class='timecell'>7:30AM</td>
     </tr>
 	-->
-    <tr>
+    <tr id="8:00AM">
         <td class='timecell'>8:00AM</td>
         <td class='timecell'>8:00AM</td>
         <td class='timecell'>8:00AM</td>
@@ -167,7 +169,7 @@
         <td class='timecell'>8:00AM</td>
         <td class='timecell'>8:00AM</td>
     </tr>
-    <tr>
+    <tr id="8:30AM">
         <td class='timecell'>8:30AM</td>
         <td class='timecell'>8:30AM</td>
         <td class='timecell'>8:30AM</td>
@@ -176,7 +178,7 @@
         <td class='timecell'>8:30AM</td>
         <td class='timecell'>8:30AM</td>
     </tr>
-    <tr>
+    <tr id="9:00AM">
         <td class='timecell'>9:00AM</td>
         <td class='timecell'>9:00AM</td>
         <td class='timecell'>9:00AM</td>
@@ -185,7 +187,7 @@
         <td class='timecell'>9:00AM</td>
         <td class='timecell'>9:00AM</td>
     </tr>
-    <tr>
+    <tr id="9:30AM">
         <td class='timecell'>9:30AM</td>
         <td class='timecell'>9:30AM</td>
         <td class='timecell'>9:30AM</td>
@@ -194,7 +196,7 @@
         <td class='timecell'>9:30AM</td>
         <td class='timecell'>9:30AM</td>
     </tr>
-    <tr>
+    <tr id="10:00AM">
         <td class='timecell'>10:00AM</td>
         <td class='timecell'>10:00AM</td>
         <td class='timecell'>10:00AM</td>
@@ -203,7 +205,7 @@
         <td class='timecell'>10:00AM</td>
         <td class='timecell'>10:00AM</td>
     </tr>
-    <tr>
+    <tr id="10:30AM">
         <td class='timecell'>10:30AM</td>
         <td class='timecell'>10:30AM</td>
         <td class='timecell'>10:30AM</td>
@@ -212,7 +214,7 @@
         <td class='timecell'>10:30AM</td>
         <td class='timecell'>10:30AM</td>
     </tr>
-    <tr>
+    <tr id="11:00AM">
         <td class='timecell'>11:00AM</td>
         <td class='timecell'>11:00AM</td>
         <td class='timecell'>11:00AM</td>
@@ -221,7 +223,7 @@
         <td class='timecell'>11:00AM</td>
         <td class='timecell'>11:00AM</td>
     </tr>
-    <tr>
+    <tr id="11:30AM">
         <td class='timecell'>11:30AM</td>
         <td class='timecell'>11:30AM</td>
         <td class='timecell'>11:30AM</td>
@@ -230,7 +232,7 @@
         <td class='timecell'>11:30AM</td>
         <td class='timecell'>11:30AM</td>
     </tr>
-    <tr>
+    <tr id="12:00PM">
         <td class='timecell'>12:00PM</td>
         <td class='timecell'>12:00PM</td>
         <td class='timecell'>12:00PM</td>
@@ -239,7 +241,7 @@
         <td class='timecell'>12:00PM</td>
         <td class='timecell'>12:00PM</td>
     </tr>
-    <tr>
+    <tr id="12:30PM">
         <td class='timecell'>12:30PM</td>
         <td class='timecell'>12:30PM</td>
         <td class='timecell'>12:30PM</td>
@@ -248,7 +250,7 @@
         <td class='timecell'>12:30PM</td>
         <td class='timecell'>12:30PM</td>
     </tr>    
-	<tr>
+	<tr id="1:00PM">
         <td class='timecell'>1:00PM</td>
         <td class='timecell'>1:00PM</td>
         <td class='timecell'>1:00PM</td>
@@ -257,7 +259,7 @@
         <td class='timecell'>1:00PM</td>
         <td class='timecell'>1:00PM</td>
     </tr>
-    <tr>
+    <tr id="1:30PM">
         <td class='timecell'>1:30PM</td>
         <td class='timecell'>1:30PM</td>
         <td class='timecell'>1:30PM</td>
@@ -266,7 +268,7 @@
         <td class='timecell'>1:30PM</td>
         <td class='timecell'>1:30PM</td>
     </tr>    
-	<tr>
+	<tr id="2:00PM">
         <td class='timecell'>2:00PM</td>
         <td class='timecell'>2:00PM</td>
         <td class='timecell'>2:00PM</td>
@@ -275,7 +277,7 @@
         <td class='timecell'>2:00PM</td>
         <td class='timecell'>2:00PM</td>
     </tr>
-    <tr>
+    <tr id="2:30PM">
         <td class='timecell'>2:30PM</td>
         <td class='timecell'>2:30PM</td>
         <td class='timecell'>2:30PM</td>
@@ -284,7 +286,7 @@
         <td class='timecell'>2:30PM</td>
         <td class='timecell'>2:30PM</td>
     </tr>    
-	<tr>
+	<tr id="3:00PM">
         <td class='timecell'>3:00PM</td>
         <td class='timecell'>3:00PM</td>
         <td class='timecell'>3:00PM</td>
@@ -293,7 +295,7 @@
         <td class='timecell'>3:00PM</td>
         <td class='timecell'>3:00PM</td>
     </tr>
-    <tr>
+    <tr id="3:30PM">
         <td class='timecell'>3:30PM</td>
         <td class='timecell'>3:30PM</td>
         <td class='timecell'>3:30PM</td>
@@ -302,7 +304,7 @@
         <td class='timecell'>3:30PM</td>
         <td class='timecell'>3:30PM</td>
     </tr>    
-	<tr>
+	<tr id="4:00PM">
         <td class='timecell'>4:00PM</td>
         <td class='timecell'>4:00PM</td>
         <td class='timecell'>4:00PM</td>
@@ -311,7 +313,7 @@
         <td class='timecell'>4:00PM</td>
         <td class='timecell'>4:00PM</td>
     </tr>
-    <tr>
+    <tr id="4:30PM">
         <td class='timecell'>4:30PM</td>
         <td class='timecell'>4:30PM</td>
         <td class='timecell'>4:30PM</td>
@@ -320,7 +322,7 @@
         <td class='timecell'>4:30PM</td>
         <td class='timecell'>4:30PM</td>
     </tr>    
-	<tr>
+	<tr id="5:00PM">
         <td class='timecell'>5:00PM</td>
         <td class='timecell'>5:00PM</td>
         <td class='timecell'>5:00PM</td>
@@ -329,7 +331,7 @@
         <td class='timecell'>5:00PM</td>
         <td class='timecell'>5:00PM</td>
     </tr>
-    <tr>
+    <tr id="5:30PM">
         <td class='timecell'>5:30PM</td>
         <td class='timecell'>5:30PM</td>
         <td class='timecell'>5:30PM</td>
@@ -338,7 +340,7 @@
         <td class='timecell'>5:30PM</td>
         <td class='timecell'>5:30PM</td>
     </tr>    
-	<tr>
+	<tr id="6:00PM">
         <td class='timecell'>6:00PM</td>
         <td class='timecell'>6:00PM</td>
         <td class='timecell'>6:00PM</td>
@@ -347,7 +349,7 @@
         <td class='timecell'>6:00PM</td>
         <td class='timecell'>6:00PM</td>
     </tr>
-    <tr>
+    <tr id="6:30PM">
         <td class='timecell'>6:30PM</td>
         <td class='timecell'>6:30PM</td>
         <td class='timecell'>6:30PM</td>
@@ -356,7 +358,7 @@
         <td class='timecell'>6:30PM</td>
         <td class='timecell'>6:30PM</td>
     </tr>    
-	<tr>
+	<tr id="7:00PM">
         <td class='timecell'>7:00PM</td>
         <td class='timecell'>7:00PM</td>
         <td class='timecell'>7:00PM</td>
@@ -365,7 +367,7 @@
         <td class='timecell'>7:00PM</td>
         <td class='timecell'>7:00PM</td>
     </tr>
-    <tr>
+    <tr id="7:30PM">
         <td class='timecell'>7:30PM</td>
         <td class='timecell'>7:30PM</td>
         <td class='timecell'>7:30PM</td>
@@ -374,7 +376,7 @@
         <td class='timecell'>7:30PM</td>
         <td class='timecell'>7:30PM</td>
     </tr>    
-	<tr>
+	<tr id="8:00PM">
         <td class='timecell'>8:00PM</td>
         <td class='timecell'>8:00PM</td>
         <td class='timecell'>8:00PM</td>
@@ -383,7 +385,7 @@
         <td class='timecell'>8:00PM</td>
         <td class='timecell'>8:00PM</td>
     </tr>
-    <tr>
+    <tr id="8:30PM">
         <td class='timecell'>8:30PM</td>
         <td class='timecell'>8:30PM</td>
         <td class='timecell'>8:30PM</td>
@@ -392,7 +394,7 @@
         <td class='timecell'>8:30PM</td>
         <td class='timecell'>8:30PM</td>
     </tr>    
-	<tr>
+	<tr id="9:00PM">
         <td class='timecell'>9:00PM</td>
         <td class='timecell'>9:00PM</td>
         <td class='timecell'>9:00PM</td>
@@ -401,7 +403,7 @@
         <td class='timecell'>9:00PM</td>
         <td class='timecell'>9:00PM</td>
     </tr>
-    <tr>
+    <tr id="9:30PM">
         <td class='timecell'>9:30PM</td>
         <td class='timecell'>9:30PM</td>
         <td class='timecell'>9:30PM</td>
@@ -410,7 +412,7 @@
         <td class='timecell'>9:30PM</td>
         <td class='timecell'>9:30PM</td>
     </tr>    
-	<tr>
+	<tr id="10:00PM">
         <td class='timecell'>10:00PM</td>
         <td class='timecell'>10:00PM</td>
         <td class='timecell'>10:00PM</td>
@@ -419,7 +421,7 @@
         <td class='timecell'>10:00PM</td>
         <td class='timecell'>10:00PM</td>
     </tr>
-    <tr>
+    <tr id="10:30PM">
         <td class='timecell'>10:30PM</td>
         <td class='timecell'>10:30PM</td>
         <td class='timecell'>10:30PM</td>
@@ -428,7 +430,7 @@
         <td class='timecell'>10:30PM</td>
         <td class='timecell'>10:30PM</td>
     </tr>    
-	<tr>
+	<tr id="11:00PM">
         <td class='timecell'>11:00PM</td>
         <td class='timecell'>11:00PM</td>
         <td class='timecell'>11:00PM</td>
@@ -437,7 +439,7 @@
         <td class='timecell'>11:00PM</td>
         <td class='timecell'>11:00PM</td>
     </tr>
-    <tr>
+    <tr id="11:30PM">
         <td class='timecell'>11:30PM</td>
         <td class='timecell'>11:30PM</td>
         <td class='timecell'>11:30PM</td>
@@ -449,12 +451,50 @@
 </table>
 
 <button id='submit'>Save Schedule</button>
+</body>
 
 <script>
 	var schedule = [[], [], [], [], [], [], []];
 	var change_to = 'unknown';
 	isMouseDown = false;
-	
+
+    function fillSchedule() {
+        for(i=0; i<schedule.length; i++) {
+            var time_list = new Array();
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: '{{=URL('default', 'get_schedule')}}',
+                data: {num: i},
+                success : function(result) {
+                    var r = result.substring(1, result.length-1);
+                    schedule[i] = r.split(',');
+                }
+            });
+            var time_list = schedule[i];
+            for(j=0; j<time_list.length; j++){
+                if(time_list[j] == '') { break; }
+                var t = parseInt(time_list[j]);
+                var ampm = "AM";
+                if(t > 1230) {
+                    t -= 1200;
+                    ampm = "PM"
+                }
+                if(t==1200 || t==1230) { ampm = "PM" }
+                t = t.toString();
+                var str;
+                if(t.length==3){
+                    str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
+                }else{
+                    str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
+                }
+                var tr = document.getElementById(str);
+                var td = tr.cells[i];
+                $(td).css({backgroundColor:'teal'});
+            }
+        }
+    }
+    
 	$('body').mousedown(function() {
         isMouseDown = true;
     })
@@ -504,7 +544,6 @@
                 data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
                  url: '{{=post_url}}',
                  success: function(msg){
-                     console.log(msg);
                  }
             });
         });
