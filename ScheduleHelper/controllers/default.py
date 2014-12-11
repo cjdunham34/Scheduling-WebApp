@@ -9,18 +9,18 @@
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
 
+@auth.requires_login()
 def index():
     """
     example action using the internationalization operator T and flash
     rendered by views/default/index.html or views/generic.html
-
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+    user_fname = auth.user.first_name
+    return locals()
 
-
+@auth.requires_login()
 def user():
     """
     exposes:
@@ -38,6 +38,7 @@ def user():
     """
     return dict(form=auth())
 
+@auth.requires_login()
 def edit_schedule():
     return dict(post_url=URL('store_schedule'))
 
@@ -53,6 +54,19 @@ def store_schedule():
     db.schedule.update_or_insert(db.schedule.user == auth.user, user=auth.user, monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
     return response.json(dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday))
 
+@auth.requires_login()
+def get_schedule():
+    time_list = []
+    day_num = request.vars.num
+    if day_num=='0': time_list = db(db.schedule.user == auth.user.id).select().first().monday
+    elif day_num=='1': time_list = db(db.schedule.user == auth.user.id).select().first().tuesday
+    elif day_num=='2': time_list = db(db.schedule.user == auth.user.id).select().first().wednesday
+    elif day_num=='3': time_list = db(db.schedule.user == auth.user.id).select().first().thursday
+    elif day_num=='4': time_list = db(db.schedule.user == auth.user.id).select().first().friday
+    elif day_num=='5': time_list = db(db.schedule.user == auth.user.id).select().first().saturday
+    elif day_num=='6': time_list = db(db.schedule.user == auth.user.id).select().first().sunday
+    return response.json(time_list)
+    
 @cache.action()
 def download():
     """
@@ -103,7 +117,6 @@ def data():
 
 
 def index():
-    if auth.user: redirect(URL('home'))
     return locals()
 
 def user():
@@ -167,26 +180,17 @@ def friends():
 def friendship():
     """Ajax callback!"""
     if request.env.request_method != 'POST': raise HTTP(400)
-
-    if a0=='request' and (not Link(source=me, target=a1)) and not (int(a1)==int(me)):
+    if a0=='request' and not Link(source=a1, target=me):
         # insert a new friendship request
         Link.insert(source=me, target=a1)
-        #db(Link.target==a1)(Link.source==me).update(accepted=True)
-        #Link.insert(source=a1, target=me)
     elif a0=='accept':
         # accept an existing friendship request
-        #db(Link.target==me)(Link.source==a1).update(accepted=True)
         db(Link.target==me)(Link.source==a1).update(accepted=True)
-        if not db(Link.source==me)(Link.target==a1).count() :
-            #print("here")
+        if not db(Link.source==me)(Link.target==a1).count():
             Link.insert(source=me, target=a1)
-            db(Link.target==a1)(Link.source==me).update(accepted=True)
-            #Link.insert(source=a1, target=me)
     elif a0=='deny':
         # deny an existing friendship request
         db(Link.target==me)(Link.source==a1).delete()
     elif a0=='remove':
         # delete a previous friendship request
         db(Link.source==me)(Link.target==a1).delete()
-        db(Link.source==a1)(Link.target==me).delete()
-        
