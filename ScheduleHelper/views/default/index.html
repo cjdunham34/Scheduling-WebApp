@@ -16,7 +16,7 @@
                     schedule[i] = r.split(',');
                 }
             });
-            var time_list = schedule[i];
+            time_list = schedule[i];
             for(j=0; j<time_list.length; j++){
                 if(time_list[j] == '') { break; }
                 var t = parseInt(time_list[j]);
@@ -35,15 +35,24 @@
                 }
                 var tr = document.getElementById(str);
                 var td = tr.cells[i];
-                $(td).css({backgroundColor:'teal'});
+                $(td).css({backgroundColor:'#123456'});
+                td.style.color = "#E1F5FF";
+               // td.style.fontWeight = "bold";
             }
         }
     }
 </script>
 
-<body onload="fillSchedule()">
-<table>
-	<h2>My schedule of availability</h2>
+<body style="background-color:#E1F5FF" onload="fillSchedule()">
+<table width = "700px">
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+	<h2>{{=user_fname}}'s schedule of availability</h2>
     <tr>
         <th><b>Monday</b></th>
         <th><b>Tuesday</b></th>
