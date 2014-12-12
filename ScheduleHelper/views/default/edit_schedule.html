@@ -451,13 +451,14 @@
 </table>
 
 <button id='submit'>Save Schedule</button>
+{{=A('go back', _class='btn btn-primary', _href=URL('index'))}}
 </body>
 
 <script>
 	var schedule = [[], [], [], [], [], [], []];
 	var change_to = 'unknown';
+    var text_color = '#FFFFFF';
 	isMouseDown = false;
-
     function fillSchedule() {
         for(i=0; i<schedule.length; i++) {
             var time_list = new Array();
@@ -492,9 +493,9 @@
                 var tr = document.getElementById(str);
                 var td = tr.cells[i];
                 $(td).css({backgroundColor:'teal'});
+                td.style.color = text_color;
             }
         }
-
         for (i = 0; i < schedule.length; i++) {
             for (j = 0; j < schedule[i].length; j++) {
                 schedule[i][j] = parseInt(schedule[i][j]);
@@ -522,12 +523,15 @@
 		if (change_to == 'unknown') {
 			if (cell.style.backgroundColor == '' || cell.style.backgroundColor == 'white') {
 				change_to = 'teal';
+                text_color = '#FFFFFF';
 			}
 			else {
 				change_to = 'white';
+                text_color = '#000000';
 			}
 		}
 		$(cell).css({backgroundColor:change_to});
+        cell.style.color = text_color;
 		var time = cell.innerHTML;
 		ampm = time.substr(time.length - 2, 2);
 		time = time.replace(':', '');
@@ -548,7 +552,7 @@
 			}
             $.ajax({
                  type: "POST",
-                data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
+                 data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
                  url: '{{=post_url}}',
                  success: function(msg){
                  }
