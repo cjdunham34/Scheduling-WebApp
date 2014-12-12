@@ -17,7 +17,9 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    user_fname = auth.user.first_name
+    user_fname = auth.user.first_name if auth.user else "Person"
+    requests = db(User.id==Link.target)(Link.source==me)\
+      .select(orderby=alphabetical)
     return locals()
 
 @auth.requires_login()
@@ -52,13 +54,11 @@ def store_schedule():
     saturday = request.vars['saturday[]']
     sunday = request.vars['sunday[]']
     db.schedule.update_or_insert(db.schedule.user == auth.user, user=auth.user, monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday)
+    response.flash = T("schedule has been saved!")
     return response.json(dict(monday=monday, tuesday=tuesday, wednesday=wednesday, thursday=thursday, friday=friday, saturday=saturday, sunday=sunday))
 
 @auth.requires_login()
 def get_schedule():
-    row = db.schedule(user=auth.user)
-    if not row:
-        db.schedule.insert(user=auth.user)
     time_list = []
     day_num = request.vars.num
     if day_num=='0': time_list = db(db.schedule.user == auth.user.id).select().first().monday
@@ -68,6 +68,20 @@ def get_schedule():
     elif day_num=='4': time_list = db(db.schedule.user == auth.user.id).select().first().friday
     elif day_num=='5': time_list = db(db.schedule.user == auth.user.id).select().first().saturday
     elif day_num=='6': time_list = db(db.schedule.user == auth.user.id).select().first().sunday
+    return response.json(time_list)
+
+@auth.requires_login()
+def get_f_schedule():
+    time_list = []
+    day_num = request.vars.num
+    user_friend = request.vars.user_friend
+    if day_num=='0': time_list = db(db.schedule.user == user_friend).select().first().monday
+    elif day_num=='1': time_list = db(db.schedule.user == user_friend).select().first().tuesday
+    elif day_num=='2': time_list = db(db.schedule.user == user_friend).select().first().wednesday
+    elif day_num=='3': time_list = db(db.schedule.user == user_friend).select().first().thursday
+    elif day_num=='4': time_list = db(db.schedule.user == user_friend).select().first().friday
+    elif day_num=='5': time_list = db(db.schedule.user == user_friend).select().first().saturday
+    elif day_num=='6': time_list = db(db.schedule.user == user_friend).select().first().sunday
     return response.json(time_list)
     
 @cache.action()
@@ -117,10 +131,6 @@ def data():
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
     """
     return dict(form=crud())
-
-
-def index():
-    return locals()
 
 def user():
     return dict(form=auth())
