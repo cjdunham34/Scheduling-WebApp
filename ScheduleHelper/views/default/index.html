@@ -3,6 +3,8 @@
 
 <script>
     var schedule = [[], [], [], [], [], [], []];
+    var matched_schedule = [[], [], [], [], [], [], []];
+    var friend_selection = new Array();
     function fillSchedule() {
         for(i=0; i<schedule.length; i++) {
             var time_list = new Array();
@@ -40,12 +42,13 @@
                // td.style.fontWeight = "bold";
             }
         }
+        matched_schedule = schedule;
     }
 
     function matchSchedules(friend) {
-      //  console.log(schedule);
         var time_list = new Array();
         var f_schedule = [[], [], [], [], [], [], []];
+        var match_schedule = [[], [], [], [], [], [], []];
         var tds = document.getElementsByTagName("td");
         for(k=0; k<tds.length; k++){
             var td = tds[k];
@@ -64,7 +67,7 @@
                 }
             });
             var match = new Array();
-            var my_day = schedule[i];
+            var my_day = matched_schedule[i];
             var friend_day = f_schedule[i];
             //array intersect loop for my_day and friend_day
             for (var a = 0, n = my_day.length, b = 0, m = friend_day.length; (a < n) && (b < m); a++) {
@@ -98,6 +101,48 @@
                 $(td).css({backgroundColor:'#123456'});
                 td.style.color = "#E1F5FF";
                // td.style.fontWeight = "bold";
+            }
+            match_schedule[i] = match;
+        }
+        matched_schedule = match_schedule;
+    }
+
+    function boxClick(friend, elem) {
+        if (elem.checked == true) {
+            friend_selection.push(friend);
+            matchSchedules(friend);
+        }
+        else {
+            friend_selection.splice(friend_selection.indexOf(friend), 1);
+            matched_schedule = schedule;
+            for (i = 0; i < schedule.length; i++) {
+                time_list = new Array();
+                time_list = schedule[i];
+                for(j=0; j<time_list.length; j++){
+                    if(time_list[j] == '') { break; }
+                    var t = parseInt(time_list[j]);
+                    var ampm = "AM";
+                    if(t > 1230) {
+                        t -= 1200;
+                        ampm = "PM"
+                    }
+                    if(t==1200 || t==1230) { ampm = "PM" }
+                    t = t.toString();
+                    var str;
+                    if(t.length==3){
+                        str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
+                    }else{
+                        str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
+                    }
+                    var tr = document.getElementById(str);
+                    var td = tr.cells[i];
+                    $(td).css({backgroundColor:'#123456'});
+                    td.style.color = "#E1F5FF";
+                   // td.style.fontWeight = "bold";
+                }
+            }
+            for (i = 0; i < friend_selection.length; i++) {
+                matchSchedules(friend_selection[i]);
             }
         }
     }
@@ -578,7 +623,7 @@ th, td {
 <h2>Friends List</h2>
   {{for friend in requests:}}
   <tr>
-      <td style="float: left"><input type="checkbox" onclick="matchSchedules({{=friend.auth_user.id}})">&nbsp;&nbsp;&nbsp;{{=name_of(friend.auth_user)}}</input></td>
+      <td style="float: left"><input type="checkbox" onclick="boxClick({{=friend.auth_user.id}}, this)">&nbsp;&nbsp;&nbsp;{{=name_of(friend.auth_user)}}</input></td>
   </tr>
   {{pass}}
 </table>
