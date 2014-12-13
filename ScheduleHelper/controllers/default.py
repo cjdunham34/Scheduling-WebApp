@@ -59,6 +59,9 @@ def store_schedule():
 
 @auth.requires_login()
 def get_schedule():
+    row = db.schedule(user=auth.user)
+    if not row:
+        db.schedule.insert(user=auth.user)
     time_list = []
     day_num = request.vars.num
     if day_num=='0': time_list = db(db.schedule.user == auth.user.id).select().first().monday
