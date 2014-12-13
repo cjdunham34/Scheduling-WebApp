@@ -45,41 +45,49 @@
         matched_schedule = schedule;
     }
 
-    function matchSchedules(friend) {
-        var time_list = new Array();
-        var f_schedule = [[], [], [], [], [], [], []];
-        var match_schedule = [[], [], [], [], [], [], []];
-        var tds = document.getElementsByTagName("td");
-        for(k=0; k<tds.length; k++){
-            var td = tds[k];
-            $(td).css({backgroundColor:'#E1F5FF'});
-            td.style.color = "#000000";
-        }
-        for(i=0; i<f_schedule.length; i++) {
-            $.ajax({
-                async: false,
-                type: "GET",
-                url: '{{=URL('default', 'get_f_schedule')}}',
-                data: {num: i, user_friend: friend},
-                success : function(result) {
-                    var r = result.substring(1, result.length-1);
-                    f_schedule[i] = r.split(', ');
-                }
-            });
-            var match = new Array();
-            var my_day = matched_schedule[i];
-            var friend_day = f_schedule[i];
-            //array intersect loop for my_day and friend_day
-            for (var a = 0, n = my_day.length, b = 0, m = friend_day.length; (a < n) && (b < m); a++) {
-                if (parseInt(my_day[a]) == parseInt(friend_day[b])){
-                    match[match.length] = my_day[a];
-                    b++;
-                } else if (parseInt(my_day[a]) > parseInt(friend_day[b])) {
-                    b++;
-                    a--;
-                }
+    function matchSchedules(friends) {
+        for (f = 0; f < friends.length; f++) {
+            friend = friends[f];
+            var time_list = new Array();
+            var f_schedule = [[], [], [], [], [], [], []];
+            var match_schedule = [[], [], [], [], [], [], []];
+            var tds = document.getElementsByTagName("td");
+            for(k=0; k<tds.length; k++){
+                var td = tds[k];
+                $(td).css({backgroundColor:'#E1F5FF'});
+                td.style.color = "#000000";
             }
-            time_list = match;
+            for(i=0; i<f_schedule.length; i++) {
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: '{{=URL('default', 'get_f_schedule')}}',
+                    data: {num: i, user_friend: friend},
+                    success : function(result) {
+                        var r = result.substring(1, result.length-1);
+                        f_schedule[i] = r.split(', ');
+                    }
+                });
+                var match = new Array();
+                var my_day = matched_schedule[i];
+                var friend_day = f_schedule[i];
+                //array intersect loop for my_day and friend_day
+                for (var a = 0, n = my_day.length, b = 0, m = friend_day.length; (a < n) && (b < m); a++) {
+                    if (parseInt(my_day[a]) == parseInt(friend_day[b])){
+                        match[match.length] = my_day[a];
+                        b++;
+                    } else if (parseInt(my_day[a]) > parseInt(friend_day[b])) {
+                        b++;
+                        a--;
+                    }
+                }
+                match_schedule[i] = match;
+            }
+            matched_schedule = match_schedule;
+        }
+        for (i = 0; i < matched_schedule.length; i++) {
+            time_list = matched_schedule[i];
+            console.log(time_list);
             for(j=0; j<time_list.length; j++){
                 if(time_list[j] == '') { break; }
                 var t = parseInt(time_list[j]);
@@ -100,50 +108,21 @@
                 var td = tr.cells[i];
                 $(td).css({backgroundColor:'#123456'});
                 td.style.color = "#E1F5FF";
-               // td.style.fontWeight = "bold";
+                // td.style.fontWeight = "bold";
             }
-            match_schedule[i] = match;
         }
-        matched_schedule = match_schedule;
     }
 
     function boxClick(friend, elem) {
         if (elem.checked == true) {
             friend_selection.push(friend);
-            matchSchedules(friend);
+            friend_array = [friend];
+            matchSchedules(friend_array);
         }
         else {
             friend_selection.splice(friend_selection.indexOf(friend), 1);
             matched_schedule = schedule;
-            for (i = 0; i < schedule.length; i++) {
-                time_list = new Array();
-                time_list = schedule[i];
-                for(j=0; j<time_list.length; j++){
-                    if(time_list[j] == '') { break; }
-                    var t = parseInt(time_list[j]);
-                    var ampm = "AM";
-                    if(t > 1230) {
-                        t -= 1200;
-                        ampm = "PM"
-                    }
-                    if(t==1200 || t==1230) { ampm = "PM" }
-                    t = t.toString();
-                    var str;
-                    if(t.length==3){
-                        str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
-                    }else{
-                        str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
-                    }
-                    var tr = document.getElementById(str);
-                    var td = tr.cells[i];
-                    $(td).css({backgroundColor:'#123456'});
-                    td.style.color = "#E1F5FF";
-                   // td.style.fontWeight = "bold";
-                }
-            }
-            for (i = 0; i < friend_selection.length; i++) {
-                matchSchedules(friend_selection[i]);
-            }
+            matchSchedules(friend_selection);
         }
     }
 </script>
