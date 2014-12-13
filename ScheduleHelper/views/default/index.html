@@ -16,7 +16,12 @@
                     schedule[i] = r.split(', ');
                 }
             });
-            time_list = schedule[i];
+        }
+        updateView(schedule);
+    }
+    function updateView(sched) {
+        for(i=0; i<sched.length; i++) {
+            time_list = sched[i];
             for(j=0; j<time_list.length; j++){
                 if(time_list[j] == '') { break; }
                 var t = parseInt(time_list[j]);
@@ -41,9 +46,9 @@
             }
         }
     }
-
     function matchSchedules(friend) {
       //  console.log(schedule);
+        if (friend == "") { return; }
         var time_list = new Array();
         var f_schedule = [[], [], [], [], [], [], []];
         var tds = document.getElementsByTagName("td");
@@ -76,30 +81,12 @@
                     a--;
                 }
             }
-            time_list = match;
-            for(j=0; j<time_list.length; j++){
-                if(time_list[j] == '') { break; }
-                var t = parseInt(time_list[j]);
-                var ampm = "AM";
-                if(t > 1230) {
-                    t -= 1200;
-                    ampm = "PM"
-                }
-                if(t==1200 || t==1230) { ampm = "PM" }
-                t = t.toString();
-                var str;
-                if(t.length==3){
-                    str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
-                }else{
-                    str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
-                }
-                var tr = document.getElementById(str);
-                var td = tr.cells[i];
-                $(td).css({backgroundColor:'#123456'});
-                td.style.color = "#E1F5FF";
-               // td.style.fontWeight = "bold";
-            }
         }
+        updateView(f_schedule);
+    }
+    function clearFriendList() {
+        document.getElementById("friend_list").value = "";
+        return;
     }
 </script>
 
@@ -111,12 +98,35 @@ th, td {
     text-align: left;
     padding-top: 4em;
 }
-#friend_list {
-    float: right;
+#friend_div {
+    float: left;
+    padding-right: 20em;
+    margin: 0;
+    padding: 0;
 }
 </style>
 
-<body style="background-color:#E1F5FF" onload="fillSchedule()" id="sched">
+<body style="background-color:#E1F5FF" onload="fillSchedule()" id="sched" style="float: left">
+    
+<div id="friend_div">
+<table>
+<h2>Friends List</h2>
+  <tr>
+      <td style="float: left">
+      <select id="friend_list" onchange="matchSchedules(this.value)">
+          <option value="">Choose a friend</option>
+      {{for friend in requests:}}
+          <option value="{{=friend.auth_user.id}}">{{=name_of(friend.auth_user)}}</option>
+      {{pass}}
+      </select>
+      </td>
+  </tr>
+  <tr>
+      <td><a onClick="fillSchedule(); clearFriendList()">clear</a></td>
+  </tr>
+</table>
+</div>
+
 <table style="float: left" width = "700px">
     <col width="100px"/>
     <col width="100px"/>
@@ -125,15 +135,15 @@ th, td {
     <col width="100px"/>
     <col width="100px"/>
     <col width="100px"/>
-	<h2>{{=user_fname}}'s schedule of availability</h2>
+	<h2 id="sched_head">{{=user_fname}}'s schedule of availability</h2>
     <tr>
-        <th><b>Monday</b></th>
-        <th><b>Tuesday</b></th>
-        <th><b>Wednesday</b></th>
-        <th><b>Thursday</b></th>
-        <th><b>Friday</b></th>
-        <th><b>Saturday</b></th>
-        <th><b>Sunday</b></th>
+        <td><b>Monday</b></td>
+        <td><b>Tuesday</b></td>
+        <td><b>Wednesday</b></td>
+        <td><b>Thursday</b></td>
+        <td><b>Friday</b></td>
+        <td><b>Saturday</b></td>
+        <td><b>Sunday</b></td>
     </tr>
 	<!--
     <tr>
@@ -370,7 +380,7 @@ th, td {
         <td class='timecell'>12:30PM</td>
         <td class='timecell'>12:30PM</td>
         <td class='timecell'>12:30PM</td>
-    </tr>    
+    </tr>
 	<tr id="1:00PM">
         <td class='timecell'>1:00PM</td>
         <td class='timecell'>1:00PM</td>
@@ -388,7 +398,7 @@ th, td {
         <td class='timecell'>1:30PM</td>
         <td class='timecell'>1:30PM</td>
         <td class='timecell'>1:30PM</td>
-    </tr>    
+    </tr>
 	<tr id="2:00PM">
         <td class='timecell'>2:00PM</td>
         <td class='timecell'>2:00PM</td>
@@ -406,7 +416,7 @@ th, td {
         <td class='timecell'>2:30PM</td>
         <td class='timecell'>2:30PM</td>
         <td class='timecell'>2:30PM</td>
-    </tr>    
+    </tr>
 	<tr id="3:00PM">
         <td class='timecell'>3:00PM</td>
         <td class='timecell'>3:00PM</td>
@@ -572,14 +582,3 @@ th, td {
     <tr><td colspan="4" id="edit_button">{{=A('edit schedule', _class='btn btn-primary', _href=URL('edit_schedule'))}}</td></tr>
 </table>
 </body>
-
-<div id="friend_list">
-<table>
-<h2>Friends List</h2>
-  {{for friend in requests:}}
-  <tr>
-      <td style="float: left"><input type="checkbox" onclick="matchSchedules({{=friend.auth_user.id}})">&nbsp;&nbsp;&nbsp;{{=name_of(friend.auth_user)}}</input></td>
-  </tr>
-  {{pass}}
-</table>
-</div>
