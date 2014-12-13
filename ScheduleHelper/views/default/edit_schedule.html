@@ -1,18 +1,30 @@
 {{response.files.append(URL(r=request,c='static',f='css/schedule.css'))}}
 {{extend 'layout.html'}}
 
+<style>
+td {
+    text-align: center;
+}
+</style>
 
 <body onload='fillSchedule()'>
-<table onmousedown='return false;'>
+<table onmousedown='return false;' width = "700px">
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
 	<h2>Click and drag on blocks of availability</h2>
     <tr>
-        <th><b>Monday</b></th>
-        <th><b>Tuesday</b></th>
-        <th><b>Wednesday</b></th>
-        <th><b>Thursday</b></th>
-        <th><b>Friday</b></th>
-        <th><b>Saturday</b></th>
-        <th><b>Sunday</b></th>
+        <td><b>Monday</b></td>
+        <td><b>Tuesday</b></td>
+        <td><b>Wednesday</b></td>
+        <td><b>Thursday</b></td>
+        <td><b>Friday</b></td>
+        <td><b>Saturday</b></td>
+        <td><b>Sunday</b></td>
     </tr>
 	<!--
     <tr>
@@ -451,7 +463,7 @@
 </table>
 
 <button id='submit'>Save Schedule</button>
-{{=A('go back', _class='btn btn-primary', _href=URL('index'))}}
+<span style="padding-left: 35em">{{=A('go back', _class='btn btn-primary', _href=URL('index'))}}</span>
 </body>
 
 <script>
