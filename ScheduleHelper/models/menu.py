@@ -6,7 +6,7 @@
 #########################################################################
 
 response.title = request.application
-response.subtitle = T('customize me!')
+response.subtitle = T('coordinate with friends!')
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
 response.meta.author = 'Your Name <you@example.com>'
