@@ -169,6 +169,8 @@ def wall():
         redirect(URL('home'))
     posts = db(Post.posted_by==user.id)\
         .select(orderby=~Post.posted_on, limitby=(0, 100))
+    myInbox = db(Post.posted_to==me)\
+        .select(orderby=~Post.posted_on, limitby=(0, 100))
     friends = db(User.id==Link.source)(Link.target==me)(Link.accepted==True)\
      .select(orderby=alphabetical)
     print (friends)
