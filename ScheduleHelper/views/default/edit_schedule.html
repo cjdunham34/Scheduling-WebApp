@@ -1,230 +1,30 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{response.files.append(URL(r=request,c='static',f='css/schedule.css'))}}
 {{extend 'layout.html'}}
 
-     <h2 id="f_list" style="font-size: large; width: 400px; left: 30px; display: inline-block; align: left; padding: .26em; color:white; background-color: black; border-radius: 4px; margin-top: 0px;">&nbsp;&nbsp;Friends List</h2>
-<div id="fr_list" style="border-bottom: 2px solid lightgray; border-right: 1px solid lightgray; width: 200px; left: 30px; background-color: white; border-radius: 0 0 10px 10px;">
-   
-    <table>
-  {{for friend in requests:}}
-  <tr style="background-color: white;">
-      <td style="text-align: left; padding-left: 1em; background-color: white;"><input type="checkbox" onclick="boxClick({{=friend.auth_user.id}}, this)">&nbsp;&nbsp;&nbsp;{{=name_of(friend.auth_user)}}</input></td>
-  </tr>
-  {{pass}}
-</table>
-</div>
-
-
 <style>
-.stick {
-    position: fixed;
-    top: 10px;
-    left: -30px;
-}
-   .stick2 {
-    position: fixed;
-    top: 70px;
-    left: -30px;
-} 
 th, td {
     text-align: center;
 }
-#edit_button {
-    text-align: left;
-    padding-top: 4em;
-    position: absolute;
-    top: 705px;
-    left: 400px;
-}
-#friend_list {
-    position: absolute;
-    top: 325px;
-    left: 30px;
-    float: left;
-}
 </style>
 
-<script>
-$(document).ready(function() {
-    var s = $("#f_list");
-    var pos = s.position();
-    $(window).scroll(function() {
-        var windowpos = $(window).scrollTop();
-       // s.html("Distance from top:" + pos.top + "<br />Scroll position: " + windowpos);
-        if (windowpos >= pos.top) {
-            s.addClass("stick");
-        } else {
-            s.removeClass("stick"); 
-        }
-    });
-});
-    $(document).ready(function() {
-    var s = $("#fr_list");
-    var pos = s.position();
-    $(window).scroll(function() {
-        var windowpos = $(window).scrollTop();
-       // s.html("Distance from top:" + pos.top + "<br />Scroll position: " + windowpos);
-        if (windowpos >= pos.top) {
-            s.addClass("stick2");
-        } else {
-            s.removeClass("stick2"); 
-        }
-    });
-});
-
-    var schedule = [[], [], [], [], [], [], []];
-    var matched_schedule = [[], [], [], [], [], [], []];
-    var friend_selection = new Array();
-    function fillSchedule() {
-        for(i=0; i<schedule.length; i++) {
-            var time_list = new Array();
-            $.ajax({
-                async: false,
-                type: "GET",
-                url: '{{=URL('default', 'get_schedule')}}',
-                data: {num: i},
-                success : function(result) {
-                    var r = result.substring(1, result.length-1);
-                    schedule[i] = r.split(', ');
-                }
-            });
-            time_list = schedule[i];
-            for(j = 0; j < time_list.length; j++){
-                if(time_list[j] == '') { break; }
-                var t = parseInt(time_list[j]);
-                var ampm = "AM";
-                if(t > 1230) {
-                    t -= 1200;
-                    ampm = "PM"
-                }
-                if(t==1200 || t==1230) { ampm = "PM" }
-                t = t.toString();
-                var str;
-                if(t.length==3) {
-                    str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
-                } else {
-                    str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
-                }
-                var tr = document.getElementById(str);
-                var td = tr.cells[i];
-                $(td).css({backgroundColor:'#1B728C'});
-                td.style.color = "#E1F5FF";
-                //td.style.
-                Weight = "bold";
-            }
-        }
-        matched_schedule = schedule;
-    }
-
-        function matchSchedules(friends) {
-        for (f = 0; f < friends.length; f++) {
-            friend = friends[f];
-            var time_list = new Array();
-            var f_schedule = [[], [], [], [], [], [], []];
-            var match_schedule = [[], [], [], [], [], [], []];
-            var tds = document.getElementsByTagName("td");
-            for(k=0; k<tds.length; k++){
-                var td = tds[k];
-                if(td.style.backgroundColor='#1B728C'){
-                $(td).css({backgroundColor:'white'});
-                td.style.color = "#000000";
-            }
-            }
-            for(i=0; i<f_schedule.length; i++) {
-                $.ajax({
-                    async: false,
-                    type: "GET",
-                    url: '{{=URL('default', 'get_f_schedule')}}',
-                    data: {num: i, user_friend: friend},
-                    success : function(result) {
-                        var r = result.substring(1, result.length-1);
-                        f_schedule[i] = r.split(', ');
-                    }
-                });
-                var match = new Array();
-                var my_day = matched_schedule[i];
-                var friend_day = f_schedule[i];
-                //array intersect loop for my_day and friend_day
-                for (var a = 0, n = my_day.length, b = 0, m = friend_day.length; (a < n) && (b < m); a++) {
-                    if (parseInt(my_day[a]) == parseInt(friend_day[b])){
-                        match[match.length] = my_day[a];
-                        b++;
-                    } else if (parseInt(my_day[a]) > parseInt(friend_day[b])) {
-                        b++;
-                        a--;
-                    }
-                }
-                match_schedule[i] = match;
-            }
-            matched_schedule = match_schedule;
-        }
-        for (i = 0; i < matched_schedule.length; i++) {
-            time_list = matched_schedule[i];
-            console.log(time_list);
-            for(j=0; j<time_list.length; j++){
-                if(time_list[j] == '') { break; }
-                var t = parseInt(time_list[j]);
-                var ampm = "AM";
-                if(t > 1230) {
-                    t -= 1200;
-                    ampm = "PM"
-                }
-                if(t==1200 || t==1230) { ampm = "PM" }
-                t = t.toString();
-                var str;
-                if(t.length==3){
-                    str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
-                }else{
-                    str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
-                }
-                var tr = document.getElementById(str);
-                var td = tr.cells[i];
-                $(td).css({backgroundColor:'#1B728C'});
-                td.style.color = "#E1F5FF";
-                // td.style.fontWeight = "bold";
-            }
-        }
-    }
-
-    function boxClick(friend, elem) {
-        if (elem.checked == true) {
-            friend_selection.push(friend);
-            friend_array = [friend];
-            matchSchedules(friend_array);
-        }
-        else {
-            friend_selection.splice(friend_selection.indexOf(friend), 1);
-            matched_schedule = schedule;
-            matchSchedules(friend_selection);
-        }
-    }
-</script>
-
-
-
-<body style="background-color: #DFE3F5; " onload="fillSchedule()" id="sched">
-<!--work on line above-->
-
-    <!--<tr><td id="edit_button">{{=A('edit schedule', _class='btn btn-primary', _href=URL('edit_schedule'))}}</td></tr>-->
-
-<!--<h2 style="position: absolute; top: 70px; left: 30px; float:left; display: inline-block; align: left; padding: .3em; color:white; background-color: black; border-radius: 4px;">&nbsp;{{=user_fname}}'s Schedule of Availability</h2>-->
-    
-
-<table style="padding-bottom: 150em; border-bottom: 3px solid lightgray; border-left: 1px solid lightgray; border-right: 1px solid lightgray; float: left; position: absolute; top: 225px; left: 250px; color: black; background-color: white; border-radius: 7px; margin-top: 20px" width = "900px">
-    <col width="200px"/>
-    <col width="200px"/>
-    <col width="200px"/>
-    <col width="200px"/>
-    <col width="200px"/>
-    <col width="200px"/>
-    <col width="200px"/>
+<body onload='fillSchedule()'>
+<table onmousedown='return false;' width = "700px">
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+    <col width="100px"/>
+	<h2>Click and drag on blocks of availability</h2>
     <tr>
-        <th style="border-radius: 4px 0 0 0; color:white; background-color: black; padding:1em"><font size="4"><b>Sunday</b></font></th>
-        <th style="color:white; background-color: black; padding:1em"><font size="4"><b>Monday</b></font></th>
-        <th style="color:white; background-color: black; padding:1em"><font size="4"><b>Tuesday</b></font></th>
-        <th style="color:white; background-color: black; padding:1em"><font size="4"><b>Wednesday</b></font></th>
-        <th style="color:white; background-color: black; padding:1em"><font size="4"><b>Thursday</b></font></th>
-        <th style="color:white; background-color: black; padding:1em"><font size="4"><b>Friday</b></font></th>
-        <th style="border-radius: 0 4px 0 0; color:white; background-color: black; padding:1em"><font size="4"><b>Saturday</b></font></th>
+        <th><b>Monday</b></th>
+        <th><b>Tuesday</b></th>
+        <th><b>Wednesday</b></th>
+        <th><b>Thursday</b></th>
+        <th><b>Friday</b></th>
+        <th><b>Saturday</b></th>
+        <th><b>Sunday</b></th>
     </tr>
 	<!--
     <tr>
@@ -662,4 +462,127 @@ $(document).ready(function() {
     </tr>
 </table>
 
+<button id='submit'>Save Schedule</button>
+<span style="padding-left: 35em">{{=A('go back', _class='btn btn-primary', _href=URL('index'))}}</span></br></br>
+<button id='clear_sched'>CLEAR</button>
 </body>
+
+<script>
+	var schedule = [[], [], [], [], [], [], []];
+	var change_to = 'unknown';
+    var text_color = '#FFFFFF';
+	isMouseDown = false;
+    function fillSchedule() {
+        for(i=0; i<schedule.length; i++) {
+            var time_list = new Array();
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: '{{=URL('default', 'get_schedule')}}',
+                data: {num: i},
+                success : function(result) {
+                    var r = result.substring(1, result.length-1);
+                    if (r.length > 2)
+                        schedule[i] = r.split(',');
+                }
+            });
+            var time_list = schedule[i];
+            for(j=0; j<time_list.length; j++){
+                if(time_list[j] == '') { break; }
+                var t = parseInt(time_list[j]);
+                var ampm = "AM";
+                if(t > 1230) {
+                    t -= 1200;
+                    ampm = "PM"
+                }
+                if(t==1200 || t==1230) { ampm = "PM" }
+                t = t.toString();
+                var str;
+                if(t.length==3){
+                    str = [t.substring(0, 1), ':', t.substring(1, 3), ampm].join('');
+                }else{
+                    str = [t.substring(0, 2), ":", t.substring(2, 4), ampm].join('');
+                }
+                var tr = document.getElementById(str);
+                var td = tr.cells[i];
+                $(td).css({backgroundColor:'teal'});
+                td.style.color = text_color;
+            }
+        }
+        for (i = 0; i < schedule.length; i++) {
+            for (j = 0; j < schedule[i].length; j++) {
+                schedule[i][j] = parseInt(schedule[i][j]);
+            }
+        }
+    }
+    
+	$('body').mousedown(function() {
+        isMouseDown = true;
+    })
+    .mouseup(function() {
+        isMouseDown = false;
+		change_to = 'unknown';
+    });
+	$('table tr td').mouseenter(function() {
+        if(isMouseDown) {
+			selectCell(this);
+		}
+    });
+	$('table tr td').mousedown(function() {
+		selectCell(this);
+	});
+	
+	function selectCell(cell) {
+		if (change_to == 'unknown') {
+			if (cell.style.backgroundColor == '' || cell.style.backgroundColor == 'white') {
+				change_to = 'teal';
+                text_color = '#FFFFFF';
+			}
+			else {
+				change_to = 'white';
+                text_color = '#000000';
+			}
+		}
+		$(cell).css({backgroundColor:change_to});
+        cell.style.color = text_color;
+		var time = cell.innerHTML;
+		ampm = time.substr(time.length - 2, 2);
+		time = time.replace(':', '');
+		time = parseInt(time.substr(0, time.length - 2));
+		if (ampm == "PM" && time < 1200)
+			time += 1200;
+		if (change_to == 'teal' && schedule[cell.cellIndex].indexOf(time) == -1)
+			schedule[cell.cellIndex].push(time);
+		else if (change_to == 'white' && schedule[cell.cellIndex].indexOf(time) != -1){
+			schedule[cell.cellIndex].splice(schedule[cell.cellIndex].indexOf(time), 1);
+		}
+	}
+	
+    $(document).ready(function() {
+        $("#submit").click(function() {
+            for (i = 0; i < schedule.length; i++) {
+				schedule[i] = schedule[i].sort(function(a, b){return a-b});
+			}
+            $.ajax({
+                 type: "POST",
+                 data: {monday:schedule[0], tuesday:schedule[1], wednesday:schedule[2], thursday:schedule[3], friday:schedule[4], saturday:schedule[5], sunday:schedule[6]},
+                 url: '{{=post_url}}',
+                 success: function(msg){
+                 }
+            });
+        });
+    });
+    $(document).ready(function() {
+        $("#clear_sched").click(function() {
+            schedule = [[], [], [], [], [], [], []];
+            var tds = document.getElementsByTagName("td");
+            for(k=0; k<tds.length; k++){
+                var td = tds[k];
+                if(td.style.backgroundColor == 'teal') {
+                    $(td).css({backgroundColor:'#FFFFFF'});
+                    td.style.color = "#000000";
+                }
+            }
+        });
+    });
+</script>
