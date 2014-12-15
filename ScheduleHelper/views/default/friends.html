@@ -15,7 +15,7 @@
   <tr>
     <td>{{=A(name_of(friend.auth_user), _href=URL('wall', args=friend.auth_user.id))}}</td>
     <td>{{if friend.link.accepted:}}accepted{{else:}}pending{{pass}}</td>
-    <td>{{=friend.link}}<button onclick="ajax('{{=URL('friendship', args=('remove', friend.auth_user.id))}}', [], null); jQuery(this).parent().html('removed')">remove</button></td>
+    <td><button onclick="ajax('{{=URL('friendship', args=('remove', friend.auth_user.id))}}', [], null); jQuery(this).parent().html('removed')">remove</button></td>
   </tr>
   {{pass}}
 </table>
