@@ -169,6 +169,21 @@ def wall():
         redirect(URL('home'))
     posts = db(Post.posted_by==user.id)\
         .select(orderby=~Post.posted_on, limitby=(0, 100))
+    friends = db(User.id==Link.source)(Link.target==me)(Link.accepted==True)\
+     .select(orderby=alphabetical)
+    print (friends)
+    #put into a list
+    friendIDNum = []
+    for friend in friends:
+        friendIDNum.append(friend.auth_user.id)
+        print (friend.auth_user)
+    db.post.posted_by.default = me
+    db.post.posted_to.requires = IS_IN_SET(friendIDNum, [(friends[x].auth_user.first_name + ' ' + friends[x].auth_user.last_name) for x in range(0, friendIDNum.__len__())], zero='Choose a Friend')
+    db.post.posted_on.default = request.now
+    form = SQLFORM(db.post, fields=['posted_to', 'body'])
+    if form.process().accepted:
+        session.flash = 'form accepted'
+        redirect(URL('wall'))
     return locals()
 
 # a page for searching friends and requesting friendship
