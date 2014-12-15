@@ -74,6 +74,7 @@ use_janrain(auth,filename='private/janrain.key')
 
 # a table to store posted messages
 db.define_table('post',
+    Field('posted_to', 'reference auth_user', required=True),
     Field('body', 'text', requires=IS_NOT_EMPTY(), label='What is on your mind?'),
     Field('posted_on', 'datetime', readable=False, writable=False),
     Field('posted_by', 'reference auth_user', readable=False, writable=False))
