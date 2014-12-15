@@ -11,33 +11,13 @@
 
 @auth.requires_login()
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
-    if you need a simple wiki simply replace the two lines below with:
-    return auth.wiki()
-    """
     user_fname = auth.user.first_name if auth.user else "Person"
-    requests = db(User.id==Link.target)(Link.source==me)\
+    requests = db(User.id==Link.target)(Link.source==me)(Link.accepted==True)\
       .select(orderby=alphabetical)
     return locals()
 
 @auth.requires_login()
 def user():
-    """
-    exposes:
-    http://..../[app]/default/user/login
-    http://..../[app]/default/user/logout
-    http://..../[app]/default/user/register
-    http://..../[app]/default/user/profile
-    http://..../[app]/default/user/retrieve_password
-    http://..../[app]/default/user/change_password
-    http://..../[app]/default/user/manage_users (requires membership in
-    use @auth.requires_login()
-        @auth.requires_membership('group name')
-        @auth.requires_permission('read','table name',record_id)
-    to decorate functions that need access control
-    """
     return dict(form=auth())
 
 @auth.requires_login()
@@ -89,22 +69,7 @@ def get_f_schedule():
     
 @cache.action()
 def download():
-    """
-    allows downloading of uploaded files
-    http://..../[app]/default/download/[filename]
-    """
     return response.download(request, db)
-
-
-def call():
-    """
-    exposes services. for example:
-    http://..../[app]/default/call/jsonrpc
-    decorate with @services.jsonrpc the functions to expose
-    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
-    """
-    return service()
-
 
 @auth.requires_login() 
 def api():
@@ -120,23 +85,7 @@ def api():
 
 @auth.requires_signature()
 def data():
-    """
-    http://..../[app]/default/data/tables
-    http://..../[app]/default/data/create/[table]
-    http://..../[app]/default/data/read/[table]/[id]
-    http://..../[app]/default/data/update/[table]/[id]
-    http://..../[app]/default/data/delete/[table]/[id]
-    http://..../[app]/default/data/select/[table]
-    http://..../[app]/default/data/search/[table]
-    but URLs bust be signed, i.e. linked with
-      A('table',_href=URL('data/tables',user_signature=True))
-    or with the signed load operator
-      LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
-    """
     return dict(form=crud())
-
-def user():
-    return dict(form=auth())
 
 def download():
     return response.download(request, db)
@@ -144,18 +93,6 @@ def download():
 def call():
     session.forget()
     return service()
-
-# our home page, will show our posts and posts by friends
-@auth.requires_login()
-def home():
-    Post.posted_by.default = me
-    Post.posted_on.default = request.now
-    crud.settings.formstyle = 'table2cols'
-    form = crud.create(Post)
-    friends = [me]+[row.target for row in myfriends.select(Link.target)]
-    posts = db(Post.posted_by.belongs(friends))\
-        .select(orderby=~Post.posted_on, limitby=(0, 100))
-    return locals()
 
 # our wall will show our profile and our own posts
 @auth.requires_login()
