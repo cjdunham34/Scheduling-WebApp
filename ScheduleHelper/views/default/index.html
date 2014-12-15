@@ -1,8 +1,10 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
-     <h2 id="f_list" style="font-size: large; width: 400px; left: 30px; display: inline-block; align: left; padding: .26em; color:white; background-color: black; border-radius: 4px; margin-top: 0px;">&nbsp;&nbsp;Friends List</h2>
-<div id="fr_list" style="border-bottom: 2px solid lightgray; border-right: 1px solid lightgray; width: 200px; left: 30px; background-color: white; border-radius: 0 0 10px 10px;">
+
+<h2 style="font-size: large; width: 400px; position: fixed; top: 226px; left: 30px; display: inline-block; align: left; padding: .26em; color:white; background-color: black; border-radius: 4px;">&nbsp;&nbsp;Friends List</h2>
+
+<div style="border-bottom: 2px solid lightgray; border-right: 1px solid lightgray; width: 200px; position: fixed; top: 300px; left: 30px; background-color: white; border-radius: 0 0 10px 10px;" id="friend_list">
    
     <table>
   {{for friend in requests:}}
@@ -15,16 +17,7 @@
 
 
 <style>
-.stick {
-    position: fixed;
-    top: 10px;
-    left: -30px;
-}
-   .stick2 {
-    position: fixed;
-    top: 70px;
-    left: -30px;
-} 
+
 th, td {
     text-align: center;
 }
@@ -44,33 +37,6 @@ th, td {
 </style>
 
 <script>
-$(document).ready(function() {
-    var s = $("#f_list");
-    var pos = s.position();
-    $(window).scroll(function() {
-        var windowpos = $(window).scrollTop();
-       // s.html("Distance from top:" + pos.top + "<br />Scroll position: " + windowpos);
-        if (windowpos >= pos.top) {
-            s.addClass("stick");
-        } else {
-            s.removeClass("stick"); 
-        }
-    });
-});
-    $(document).ready(function() {
-    var s = $("#fr_list");
-    var pos = s.position();
-    $(window).scroll(function() {
-        var windowpos = $(window).scrollTop();
-       // s.html("Distance from top:" + pos.top + "<br />Scroll position: " + windowpos);
-        if (windowpos >= pos.top) {
-            s.addClass("stick2");
-        } else {
-            s.removeClass("stick2"); 
-        }
-    });
-});
-
     var schedule = [[], [], [], [], [], [], []];
     var matched_schedule = [[], [], [], [], [], [], []];
     var friend_selection = new Array();
@@ -204,7 +170,7 @@ $(document).ready(function() {
 <body style="background-color: #DFE3F5; " onload="fillSchedule()" id="sched">
 <!--work on line above-->
 
-<table style="padding-bottom: 150em; border-bottom: 3px solid lightgray; border-left: 1px solid lightgray; border-right: 1px solid lightgray; float: left; position: absolute; top: 225px; left: 250px; color: black; background-color: white; border-radius: 7px; margin-top: 20px" width = "900px">
+<table style="padding-bottom: 150em; border-bottom: 3px solid lightgray; border-left: 1px solid lightgray; border-right: 1px solid lightgray; float: left; position: absolute; top: 225px; left: 250px; color: black; background-color: white; border-radius: 7px" width = "900px">
     <col width="200px"/>
     <col width="200px"/>
     <col width="200px"/>
