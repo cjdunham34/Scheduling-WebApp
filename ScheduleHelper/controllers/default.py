@@ -225,7 +225,7 @@ def friendship():
         db(Link.target==me)(Link.source==a1).update(accepted=True)
         if not db(Link.source==me)(Link.target==a1).count() :
             Link.insert(source=me, target=a1)
-            db(Link.target==a1)(Link.source==me).update(accepted=True))
+            db((Link.target==a1)(Link.source==me).update(accepted=True))
     elif a0=='deny':
         # deny an existing friendship request
         db(Link.target==me)(Link.source==a1).delete()
