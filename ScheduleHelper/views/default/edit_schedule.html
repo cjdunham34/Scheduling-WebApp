@@ -2,7 +2,7 @@
 {{extend 'layout.html'}}
 
 <style>
-td {
+th, td {
     text-align: center;
 }
 </style>
@@ -463,7 +463,8 @@ td {
 </table>
 
 <button id='submit'>Save Schedule</button>
-<span style="padding-left: 35em">{{=A('go back', _class='btn btn-primary', _href=URL('index'))}}</span>
+<span style="padding-left: 35em">{{=A('go back', _class='btn btn-primary', _href=URL('index'))}}</span></br></br>
+<button id='clear_sched'>CLEAR</button>
 </body>
 
 <script>
@@ -569,6 +570,19 @@ td {
                  success: function(msg){
                  }
             });
+        });
+    });
+    $(document).ready(function() {
+        $("#clear_sched").click(function() {
+            schedule = [[], [], [], [], [], [], []];
+            var tds = document.getElementsByTagName("td");
+            for(k=0; k<tds.length; k++){
+                var td = tds[k];
+                if(td.style.backgroundColor == 'teal') {
+                    $(td).css({backgroundColor:'#FFFFFF'});
+                    td.style.color = "#000000";
+                }
+            }
         });
     });
 </script>
