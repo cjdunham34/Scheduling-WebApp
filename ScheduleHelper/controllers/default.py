@@ -220,17 +220,12 @@ def friendship():
     if a0=='request' and (not Link(source=me, target=a1)) and not (int(a1)==int(me)):
         # insert a new friendship request
         Link.insert(source=me, target=a1)
-        #db(Link.target==a1)(Link.source==me).update(accepted=True)
-        #Link.insert(source=a1, target=me)
     elif a0=='accept':
         # accept an existing friendship request
-        #db(Link.target==me)(Link.source==a1).update(accepted=True)
         db(Link.target==me)(Link.source==a1).update(accepted=True)
         if not db(Link.source==me)(Link.target==a1).count() :
-            #print("here")
             Link.insert(source=me, target=a1)
-            db(Link.target==a1)(Link.source==me).update(accepted=True)
-            #Link.insert(source=a1, target=me)
+            db(Link.target==a1)(Link.source==me).update(accepted=True))
     elif a0=='deny':
         # deny an existing friendship request
         db(Link.target==me)(Link.source==a1).delete()
