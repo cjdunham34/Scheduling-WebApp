@@ -1,7 +1,7 @@
 <body style="background-color: #DFE3F5;">
     
 {{extend 'layout.html'}}
-<h2>Friendship Offered</h2>
+<h2>Friend Requests</h2>
 <table>
   {{for friend in friends:}}
   <tr> {{if friend.link.accepted:}} {{else:}}
@@ -11,7 +11,7 @@
   </tr>
   {{pass}}
 </table>
-<h2>Friendship Requested</h2>
+<h2>Friends List</h2>
 <table>
   {{for friend in requests:}}
   <tr>
